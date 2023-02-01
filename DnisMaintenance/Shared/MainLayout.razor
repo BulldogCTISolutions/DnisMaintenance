@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<div class="container">
+    <div class="siteheader">
+        <LoginDisplay />
+    </div>
+
+    <div class="main">
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent Context="ex">
+                <p class="error">@ex.Message</p>
+            </ErrorContent>
+        </ErrorBoundary>
+    </div>
+</div>
+
+<footer style="color: red; margin-left: 20px; margin-top: 50px">
+    Note: Genesys UserData Keys change often.  We're unable to display a current list.  Please ensure that spelling and case-sensitivity are correct.
+</footer>

@@ -1,0 +1,101 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<PageTitle>DNIS Maintenance</PageTitle>
+
+<div style="margin-left: 20px; margin-top: 15px">
+    <h4>WDE CallDataWindow Maintenance Tool</h4>
+</div>
+
+<div>
+    <div style="margin-top: 10px">
+        <FluentCombobox Id="comboboxRegion"
+                        Placeholder="Please select a Region"
+                        Position="SelectPosition.Below"
+                        Items="@this._regionOptions"
+                        OptionText="@(r => r.Text)"
+                        OptionValue="@(r => r.Value)"
+                        ValueChanged="@( (string selectedRegion) => OnChangeSelectedRegion(selectedRegion) )" />
+    </div>
+
+    <div style="margin-top: 10px">
+        <FluentCombobox Id="comboBoxSelectDnis"
+                        Placeholder="Please select a DNIS"
+                        Position="SelectPosition.Below"
+                        Items="@this._dnisOptions"
+                        OptionText="@(i => i.Text)"
+                        OptionValue="@(i => i.Value)"
+                        ValueChanged="@( (string selectedDNIS) => OnChangeSelectedDnis(selectedDNIS) )" />
+    </div>
+
+    <div style="margin-top: 10px">
+        <FluentDataGrid Id="gridDnis" RowsData=@this._kvpList GridTemplateColumns="1fr 1fr 1fr" TGridItem=KvpList>
+            <TemplateColumn Title="Friendly Name">
+                <FluentTextField @bind-Value="@context.FriendlyName" />
+            </TemplateColumn>
+            <TemplateColumn Title="Genesys UserData Key">
+                <FluentTextField @bind-Value="@context.GenesysKey" />
+            </TemplateColumn>
+            @*<TemplateColumn Title="Is this an Event Attribute?">
+                <FluentTextField @bind-Value="@context.UseAttribute.ToString()" />
+            </TemplateColumn>*@
+        </FluentDataGrid>
+    </div>
+    @*<PropertyColumn Title="Friendly Name" Property="@(d => d.FriendlyName)" Sortable="true" Align=Align.Left />
+    <PropertyColumn Title="Genesys UserData Key" Property="@(d => d.GenesysKey)" Sortable="true" Align=Align.Left />
+    <PropertyColumn Title="Is this an Event Attribute?" Property="@(d => d.UseAttribute)" Sortable="true" Align=Align.Left />*@
+</div>
+
+@code
+{
+    private List<Option<string>> _regionOptions = new List<Option<string>>();
+    private List<Option<string>> _dnisOptions = new List<Option<string>>();
+    private CallDataWindowConfiguration _dnisConfigurations;
+    private IQueryable<KvpList> _kvpList;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        List<Region> regions = await Http.GetFromJsonAsync<List<Region>>( "sample-data/regions.json" ).ConfigureAwait( false );
+        if( regions is null )
+        {
+            return;
+        }
+        this._regionOptions.Clear();
+        foreach( Region region in regions )
+        {
+            //  This goes to a combobox
+            this._regionOptions.Add( new Option<string> { Value = $"{region.Code}", Text = $"{region.Description}" } );
+        }
+    }
+
+    protected async Task OnChangeSelectedRegion( string selectedRegion )
+    {
+        if( string.IsNullOrEmpty( selectedRegion ) == true )
+        {
+            return;
+        }
+        string rawJson = await Http.GetStringAsync( $"sample-data/{selectedRegion}_DNIS_Configuration.json" ).ConfigureAwait( false );
+        this._dnisConfigurations = CallDataWindowConfiguration.FromJson( rawJson );
+
+        this._dnisOptions.Clear();
+        foreach( KeyValuePair<string, DnisList> item in this._dnisConfigurations.DnisList[0] )
+        {
+            //  This goes to a combobox
+            this._dnisOptions.Add( new Option<string> { Value = $"{item.Key}", Text = $"{item.Key}" } );
+        }
+    }
+
+    protected void OnChangeSelectedDnis( string selectedDNIS )
+    {
+        if( string.IsNullOrEmpty( selectedDNIS ) == true )
+        {
+            return;
+        }
+        bool success = this._dnisConfigurations.DnisList[0].TryGetValue( selectedDNIS, out DnisList item );
+        if( success && item is not null )
+        {
+            this._kvpList = item.KvpList.ToList().AsQueryable();
+        }
+    }
+}

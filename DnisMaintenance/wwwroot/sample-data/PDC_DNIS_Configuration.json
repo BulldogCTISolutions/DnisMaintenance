@@ -1,0 +1,106 @@
+﻿{
+  "DNIS_List": [
+    {
+      "9931009246": {
+        "script": "Hello. I am ##FIRSTNAME##.  How can I help you today?",
+        "KVP_List": [
+          {
+            "friendlyName": "MRN",
+            "genesysKey": "CustomerID"
+          },
+          {
+            "friendlyName": "CCSTI Report Tracking",
+            "genesysKey": "CONNID"
+          },
+          {
+            "friendlyName": "IVR Validated?",
+            "genesysKey": "GVP_MEMBER_AUTH_STATUS"
+          },
+          {
+            "friendlyName": "IVR Exit Reason",
+            "genesysKey": "GVP_IVR_EXIT_REASON"
+          },
+          {
+            "friendlyName": "Member Region",
+            "genesysKey": "CustomerSegment"
+          },
+          {
+            "friendlyName": "Caller ID",
+            "genesysKey": "ANI",
+            "useAttribute":  true
+          },
+          {
+            "friendlyName": "Employer Group",
+            "genesysKey": "URS_VIRTUALQUEUE"
+          }
+        ]
+      },
+      "9931008822": {
+        "script": "Hello. I am ##FIRSTNAME##.  How can I help you today?",
+        "KVP_List": [
+          {
+            "friendlyName": "MRN",
+            "genesysKey": "CustomerID"
+          },
+          {
+            "friendlyName": "CCSTI Report Tracking",
+            "genesysKey": "CONNID"
+          },
+          {
+            "friendlyName": "IVR Validated?",
+            "genesysKey": "GVP_MEMBER_AUTH_STATUS"
+          },
+          {
+            "friendlyName": "IVR Exit Reason",
+            "genesysKey": "GVP_IVR_EXIT_REASON"
+          },
+          {
+            "friendlyName": "Member Region",
+            "genesysKey": "CustomerSegment"
+          },
+          {
+            "friendlyName": "Caller ID",
+            "genesysKey": "URS_ANI"
+          },
+          {
+            "friendlyName": "Employer Group",
+            "genesysKey": "URS_VIRTUALQUEUE"
+          }
+        ]
+      },
+      "9931008801": {
+        "script": "Hello. I am ##FIRSTNAME##.  How can I help you today?",
+        "KVP_List": [
+          {
+            "friendlyName": "MRN",
+            "genesysKey": "CustomerID"
+          },
+          {
+            "friendlyName": "CCSTI Report Tracking",
+            "genesysKey": "CONNID"
+          },
+          {
+            "friendlyName": "IVR Validated?",
+            "genesysKey": "GVP_MEMBER_AUTH_STATUS"
+          },
+          {
+            "friendlyName": "IVR Exit Reason",
+            "genesysKey": "GVP_IVR_EXIT_REASON"
+          },
+          {
+            "friendlyName": "Member Region",
+            "genesysKey": "CustomerSegment"
+          },
+          {
+            "friendlyName": "Caller ID",
+            "genesysKey": "URS_ANI"
+          },
+          {
+            "friendlyName": "Employer Group",
+            "genesysKey": "URS_VIRTUALQUEUE"
+          }
+        ]
+      }
+    }
+  ]
+}
