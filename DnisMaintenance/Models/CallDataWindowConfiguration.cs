@@ -69,8 +69,6 @@ public partial class KvpList
 
     [JsonPropertyName( "useAttribute" )]
     public bool UseAttribute { get; set; } = false;
-
-    public string GenesysValue { get; set; } = string.Empty;
 }
 
 public partial class CallDataWindowConfiguration

@@ -20,6 +20,7 @@
 
     <div style="margin-top: 10px">
         <FluentCombobox Id="comboBoxSelectDnis"
+                        Disabled="@this._disableDNISCombobox"
                         Placeholder="Please select a DNIS"
                         Position="SelectPosition.Below"
                         Items="@this._dnisOptions"
@@ -29,29 +30,44 @@
     </div>
 
     <div style="margin-top: 10px">
-        <FluentDataGrid Id="gridDnis" RowsData=@this._kvpList GridTemplateColumns="1fr 1fr 1fr" TGridItem=KvpList>
+        <FluentDataGrid Id="gridDnis" RowsData=@this._kvpList GridTemplateColumns="1fr 1fr 0.4fr 0.2fr" TGridItem=KvpList>
             <TemplateColumn Title="Friendly Name">
-                <FluentTextField @bind-Value="@context.FriendlyName" />
+                <FluentTextField Style="width: 100%; justify-content: left" @bind-Value="@context.FriendlyName" />
             </TemplateColumn>
             <TemplateColumn Title="Genesys UserData Key">
-                <FluentTextField @bind-Value="@context.GenesysKey" />
+                <FluentTextField Style="width: 100%; justify-content: left" @bind-Value="@context.GenesysKey" />
             </TemplateColumn>
-            @*<TemplateColumn Title="Is this an Event Attribute?">
-                <FluentTextField @bind-Value="@context.UseAttribute.ToString()" />
-            </TemplateColumn>*@
+            <TemplateColumn Title="Is this an Event Attribute?">
+                @if( context.UseAttribute )
+                {
+                    <FluentCheckbox Checked="true">Yes</FluentCheckbox>
+                    <FluentCheckbox Checked="false">No</FluentCheckbox>
+                }
+                else
+                {
+                    <FluentCheckbox Checked="false">Yes</FluentCheckbox>
+                    <FluentCheckbox Checked="true">No</FluentCheckbox>
+                }
+            </TemplateColumn>
+            <TemplateColumn Title="View Order">
+                <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickDownArrow(context))">
+                    <FluentIcon Name="@FluentIcons.ArrowDown" Size="@IconSize.Size16" />
+                </FluentButton>
+                <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickUpArrow(context))">
+                    <FluentIcon Name="@FluentIcons.ArrowUp" Size="@IconSize.Size16" />
+                </FluentButton>
+            </TemplateColumn>
         </FluentDataGrid>
     </div>
-    @*<PropertyColumn Title="Friendly Name" Property="@(d => d.FriendlyName)" Sortable="true" Align=Align.Left />
-    <PropertyColumn Title="Genesys UserData Key" Property="@(d => d.GenesysKey)" Sortable="true" Align=Align.Left />
-    <PropertyColumn Title="Is this an Event Attribute?" Property="@(d => d.UseAttribute)" Sortable="true" Align=Align.Left />*@
 </div>
 
 @code
 {
     private List<Option<string>> _regionOptions = new List<Option<string>>();
     private List<Option<string>> _dnisOptions = new List<Option<string>>();
-    private CallDataWindowConfiguration _dnisConfigurations;
-    private IQueryable<KvpList> _kvpList;
+    private CallDataWindowConfiguration? _dnisConfigurations;
+    private IQueryable<KvpList>? _kvpList;
+    private bool _disableDNISCombobox = true;
 
 
     protected override async Task OnInitializedAsync()
@@ -84,6 +100,7 @@
             //  This goes to a combobox
             this._dnisOptions.Add( new Option<string> { Value = $"{item.Key}", Text = $"{item.Key}" } );
         }
+        this._disableDNISCombobox = false;
     }
 
     protected void OnChangeSelectedDnis( string selectedDNIS )
@@ -97,5 +114,15 @@
         {
             this._kvpList = item.KvpList.ToList().AsQueryable();
         }
+    }
+
+    protected void OnClickDownArrow(KvpList? row)
+    {
+        Console.WriteLine("Down Arrow Clicked");
+    }
+
+    protected void OnClickUpArrow(KvpList? row)
+    {
+        Console.WriteLine( "Up Arrow Clicked" );
     }
 }
