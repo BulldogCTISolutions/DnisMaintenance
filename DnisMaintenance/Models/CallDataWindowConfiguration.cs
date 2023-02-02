@@ -61,6 +61,9 @@ public partial class DnisList
 
 public partial class KvpList
 {
+    [JsonPropertyName( "viewOrder" )]
+    public int ViewOrder { get; set; }
+
     [JsonPropertyName( "friendlyName" )]
     public string FriendlyName { get; set; } = string.Empty;
 

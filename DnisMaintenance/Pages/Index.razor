@@ -9,24 +9,23 @@
 
 <div>
     <div style="margin-top: 10px">
-        <FluentCombobox Id="comboboxRegion"
-                        Placeholder="Please select a Region"
-                        Position="SelectPosition.Below"
-                        Items="@this._regionOptions"
-                        OptionText="@(r => r.Text)"
-                        OptionValue="@(r => r.Value)"
-                        ValueChanged="@( (string selectedRegion) => OnChangeSelectedRegion(selectedRegion) )" />
+        <FluentSelect Id="selectRegion"
+                      Position="SelectPosition.Below"
+                      Items="@this._regionOptions"
+                      OptionText="@(r => r.Text)"
+                      OptionValue="@(r => r.Value)"
+                      ValueChanged="@( (string selectedRegion) => OnChangeSelectedRegion(selectedRegion) )" />
     </div>
 
     <div style="margin-top: 10px">
-        <FluentCombobox Id="comboBoxSelectDnis"
-                        Disabled="@this._disableDNISCombobox"
-                        Placeholder="Please select a DNIS"
-                        Position="SelectPosition.Below"
-                        Items="@this._dnisOptions"
-                        OptionText="@(i => i.Text)"
-                        OptionValue="@(i => i.Value)"
-                        ValueChanged="@( (string selectedDNIS) => OnChangeSelectedDnis(selectedDNIS) )" />
+        <FluentSelect Id="selectDnis"
+                      Disabled="@this._disableDNISSelect"
+                      Position="SelectPosition.Below"
+                      Items="@this._dnisOptions"
+                      OptionText="@(i => i.Text)"
+                      OptionValue="@(i => i.Value)"
+                      ValueChanged="@( (string selectedDNIS) => OnChangeSelectedDnis(selectedDNIS) )" />
+        <FluentTextArea Style="width: 100%; margin-top: 10px" Value="@this._dnisScript">Script</FluentTextArea>
     </div>
 
     <div style="margin-top: 10px">
@@ -38,16 +37,18 @@
                 <FluentTextField Style="width: 100%; justify-content: left" @bind-Value="@context.GenesysKey" />
             </TemplateColumn>
             <TemplateColumn Title="Is this an Event Attribute?">
-                @if( context.UseAttribute )
-                {
-                    <FluentCheckbox Checked="true">Yes</FluentCheckbox>
-                    <FluentCheckbox Checked="false">No</FluentCheckbox>
-                }
-                else
-                {
-                    <FluentCheckbox Checked="false">Yes</FluentCheckbox>
-                    <FluentCheckbox Checked="true">No</FluentCheckbox>
-                }
+                <FluentRadioGroup>
+                    @if( context.UseAttribute )
+                    {
+                        <FluentRadio Value="checked" Checked="true">Yes</FluentRadio>
+                        <FluentRadio Checked="false">No</FluentRadio>
+                    }
+                    else
+                    {
+                        <FluentRadio Checked="false">Yes</FluentRadio>
+                        <FluentRadio Value="checked" Checked="true">No</FluentRadio>
+                    }
+                </FluentRadioGroup>
             </TemplateColumn>
             <TemplateColumn Title="View Order">
                 <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickDownArrow(context))">
@@ -67,7 +68,10 @@
     private List<Option<string>> _dnisOptions = new List<Option<string>>();
     private CallDataWindowConfiguration? _dnisConfigurations;
     private IQueryable<KvpList>? _kvpList;
-    private bool _disableDNISCombobox = true;
+    private bool _disableDNISSelect = true;
+    private const string _regionPlaceHolder = "Please select a Region";
+    private const string _dnisPlaceHolder = "Please select a DNIS";
+    private string _dnisScript;
 
 
     protected override async Task OnInitializedAsync()
@@ -78,6 +82,7 @@
             return;
         }
         this._regionOptions.Clear();
+        this._regionOptions.Add( new Option<string> { Value = $"", Text = $"{_regionPlaceHolder}" } );
         foreach( Region region in regions )
         {
             //  This goes to a combobox
@@ -87,6 +92,7 @@
 
     protected async Task OnChangeSelectedRegion( string selectedRegion )
     {
+        //  TODO:  What if user changes the region?  Need to clear out existing Lists.
         if( string.IsNullOrEmpty( selectedRegion ) == true )
         {
             return;
@@ -95,16 +101,18 @@
         this._dnisConfigurations = CallDataWindowConfiguration.FromJson( rawJson );
 
         this._dnisOptions.Clear();
+        this._dnisOptions.Add( new Option<string> { Value = $"", Text = $"{_dnisPlaceHolder}" } );
         foreach( KeyValuePair<string, DnisList> item in this._dnisConfigurations.DnisList[0] )
         {
             //  This goes to a combobox
             this._dnisOptions.Add( new Option<string> { Value = $"{item.Key}", Text = $"{item.Key}" } );
         }
-        this._disableDNISCombobox = false;
+        this._disableDNISSelect = false;
     }
 
     protected void OnChangeSelectedDnis( string selectedDNIS )
     {
+        //  TODO:  What if user changes the dnis?  Need to clear out existing Lists.
         if( string.IsNullOrEmpty( selectedDNIS ) == true )
         {
             return;
@@ -112,17 +120,18 @@
         bool success = this._dnisConfigurations.DnisList[0].TryGetValue( selectedDNIS, out DnisList item );
         if( success && item is not null )
         {
+            this._dnisScript = item.Script;
             this._kvpList = item.KvpList.ToList().AsQueryable();
         }
     }
 
-    protected void OnClickDownArrow(KvpList? row)
+    protected void OnClickDownArrow( KvpList? row )
     {
-        Console.WriteLine("Down Arrow Clicked");
+        Console.WriteLine( $"Down Arrow Clicked: {row}" );
     }
 
-    protected void OnClickUpArrow(KvpList? row)
+    protected void OnClickUpArrow( KvpList? row )
     {
-        Console.WriteLine( "Up Arrow Clicked" );
+        Console.WriteLine( $"Up Arrow Clicked: {row}" );
     }
 }
