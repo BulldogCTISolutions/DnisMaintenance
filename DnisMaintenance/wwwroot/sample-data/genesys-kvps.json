@@ -1,0 +1,638 @@
+﻿[
+  {
+    "Value": "AGENT_LOB_CROSSOVER",
+    "Text": "AGENT_LOB_CROSSOVER"
+  },
+  {
+    "Value": "BUSINESS_RESULT",
+    "Text": "BUSINESS_RESULT"
+  },
+  {
+    "Value": "CTI_TRANSFER",
+    "Text": "CTI_TRANSFER"
+  },
+  {
+    "Value": "CTI_UPDATED_MRN",
+    "Text": "CTI_UPDATED_MRN"
+  },
+  {
+    "Value": "CUSTOMERID",
+    "Text": "CUSTOMERID"
+  },
+  {
+    "Value": "CUSTOMERSEGMENT",
+    "Text": "CUSTOMERSEGMENT"
+  },
+  {
+    "Value": "GSW_AGENT_ID",
+    "Text": "GSW_AGENT_ID"
+  },
+  {
+    "Value": "GSW_APPLICATION_ID",
+    "Text": "GSW_APPLICATION_ID"
+  },
+  {
+    "Value": "GSW_ATTEMPTS",
+    "Text": "GSW_ATTEMPTS"
+  },
+  {
+    "Value": "GSW_CALL_ATTEMPT_GUID",
+    "Text": "GSW_CALL_ATTEMPT_GUID"
+  },
+  {
+    "Value": "GSW_CALL_RESULT",
+    "Text": "GSW_CALL_RESULT"
+  },
+  {
+    "Value": "GSW_CALL_TYPE",
+    "Text": "GSW_CALL_TYPE"
+  },
+  {
+    "Value": "GSW_CALLING_LIST",
+    "Text": "GSW_CALLING_LIST"
+  },
+  {
+    "Value": "GSW_CALLING_LIST_DBID",
+    "Text": "GSW_CALLING_LIST_DBID"
+  },
+  {
+    "Value": "GSW_CAMPAIGN_GROUP_DBID",
+    "Text": "GSW_CAMPAIGN_GROUP_DBID"
+  },
+  {
+    "Value": "GSW_CAMPAIGN_GROUP_DESCRIPTION",
+    "Text": "GSW_CAMPAIGN_GROUP_DESCRIPTION"
+  },
+  {
+    "Value": "GSW_CAMPAIGN_GROUP_NAME",
+    "Text": "GSW_CAMPAIGN_GROUP_NAME"
+  },
+  {
+    "Value": "GSW_CAMPAIGN_NAME",
+    "Text": "GSW_CAMPAIGN_NAME"
+  },
+  {
+    "Value": "GSW_CHAIN_ID",
+    "Text": "GSW_CHAIN_ID"
+  },
+  {
+    "Value": "GSW_CONTACT_MEDIA_TYPE",
+    "Text": "GSW_CONTACT_MEDIA_TYPE"
+  },
+  {
+    "Value": "GSW_PHONE",
+    "Text": "GSW_PHONE"
+  },
+  {
+    "Value": "GSW_QUEUE_DBID",
+    "Text": "GSW_QUEUE_DBID"
+  },
+  {
+    "Value": "GSW_RECORD_HANDLE",
+    "Text": "GSW_RECORD_HANDLE"
+  },
+  {
+    "Value": "GSW_RECORD_URI",
+    "Text": "GSW_RECORD_URI"
+  },
+  {
+    "Value": "GSW_SESSION_DBID",
+    "Text": "GSW_SESSION_DBID"
+  },
+  {
+    "Value": "GSW_STAT_QUERY",
+    "Text": "GSW_STAT_QUERY"
+  },
+  {
+    "Value": "GSW_SWITCH_DBID",
+    "Text": "GSW_SWITCH_DBID"
+  },
+  {
+    "Value": "GSW_TZ_NAME",
+    "Text": "GSW_TZ_NAME"
+  },
+  {
+    "Value": "GSW_TZ_OFFSET",
+    "Text": "GSW_TZ_OFFSET"
+  },
+  {
+    "Value": "GVP_ANI_MATCH_AUTHENTICATED",
+    "Text": "GVP_ANI_MATCH_AUTHENTICATED"
+  },
+  {
+    "Value": "GVP_ANI_MATCH_FAIL_REASON",
+    "Text": "GVP_ANI_MATCH_FAIL_REASON"
+  },
+  {
+    "Value": "GVP_ANI_MATCHED",
+    "Text": "GVP_ANI_MATCHED"
+  },
+  {
+    "Value": "GVP_APP_LABEL",
+    "Text": "GVP_APP_LABEL"
+  },
+  {
+    "Value": "GVP_APPOINTMENT_NOTES",
+    "Text": "GVP_APPOINTMENT_NOTES"
+  },
+  {
+    "Value": "GVP_CALL_TYPE",
+    "Text": "GVP_CALL_TYPE"
+  },
+  {
+    "Value": "GVP_CALLERTYPE",
+    "Text": "GVP_CALLERTYPE"
+  },
+  {
+    "Value": "GVP_CAMPAIGN_CODE",
+    "Text": "GVP_CAMPAIGN_CODE"
+  },
+  {
+    "Value": "GVP_COHORTS",
+    "Text": "GVP_COHORTS"
+  },
+  {
+    "Value": "GVP_CUSTOMERIDMATCHED",
+    "Text": "GVP_CUSTOMERIDMATCHED"
+  },
+  {
+    "Value": "GVP_CUSTOMERIDTYPEENTERED",
+    "Text": "GVP_CUSTOMERIDTYPEENTERED"
+  },
+  {
+    "Value": "GVP_DOB",
+    "Text": "GVP_DOB"
+  },
+  {
+    "Value": "GVP_DOBVERIFIED",
+    "Text": "GVP_DOBVERIFIED"
+  },
+  {
+    "Value": "GVP_EMPLOYER_GROUP",
+    "Text": "GVP_EMPLOYER_GROUP"
+  },
+  {
+    "Value": "GVP_EMPLOYER_SUB_GROUP",
+    "Text": "GVP_EMPLOYER_SUB_GROUP"
+  },
+  {
+    "Value": "GVP_ESB_ERR_TO_CTI_ERR_TEXT",
+    "Text": "GVP_ESB_ERR_TO_CTI_ERR_TEXT"
+  },
+  {
+    "Value": "GVP_EXIT_POINT_NBR",
+    "Text": "GVP_EXIT_POINT_NBR"
+  },
+  {
+    "Value": "GVP_EXTERNAL_DEST",
+    "Text": "GVP_EXTERNAL_DEST"
+  },
+  {
+    "Value": "GVP_FLEX_CHOICE",
+    "Text": "GVP_FLEX_CHOICE"
+  },
+  {
+    "Value": "GVP_INSTANCEID",
+    "Text": "GVP_INSTANCEID"
+  },
+  {
+    "Value": "GVP_INTERACTIONID",
+    "Text": "GVP_INTERACTIONID"
+  },
+  {
+    "Value": "GVP_IVR_EXIT_POINT",
+    "Text": "GVP_IVR_EXIT_POINT"
+  },
+  {
+    "Value": "GVP_IVR_EXIT_REASON",
+    "Text": "GVP_IVR_EXIT_REASON"
+  },
+  {
+    "Value": "GVP_LANGUAGE",
+    "Text": "GVP_LANGUAGE"
+  },
+  {
+    "Value": "GVP_LOB",
+    "Text": "GVP_LOB"
+  },
+  {
+    "Value": "GVP_MEDICARE_STATUS",
+    "Text": "GVP_MEDICARE_STATUS"
+  },
+  {
+    "Value": "GVP_MEMBER_AUTH_STATUS",
+    "Text": "GVP_MEMBER_AUTH_STATUS"
+  },
+  {
+    "Value": "GVP_MEMBER_NAME",
+    "Text": "GVP_MEMBER_NAME"
+  },
+  {
+    "Value": "GVP_MEMBER_VALIDATION_STATUS",
+    "Text": "GVP_MEMBER_VALIDATION_STATUS"
+  },
+  {
+    "Value": "GVP_MRNCORRECTION",
+    "Text": "GVP_MRNCORRECTION"
+  },
+  {
+    "Value": "GVP_NPIMATCHED",
+    "Text": "GVP_NPIMATCHED"
+  },
+  {
+    "Value": "GVP_PCP_ID",
+    "Text": "GVP_PCP_ID"
+  },
+  {
+    "Value": "GVP_PHARMACY_BACKEND",
+    "Text": "GVP_PHARMACY_BACKEND"
+  },
+  {
+    "Value": "GVP_PHARMACY_ID",
+    "Text": "GVP_PHARMACY_ID"
+  },
+  {
+    "Value": "GVP_PREAUTHANNOUNCEMENTPLAYED",
+    "Text": "GVP_PREAUTHANNOUNCEMENTPLAYED"
+  },
+  {
+    "Value": "GVP_PROGRAM_CARRIER",
+    "Text": "GVP_PROGRAM_CARRIER"
+  },
+  {
+    "Value": "GVP_PROSPECTNAME",
+    "Text": "GVP_PROSPECTNAME"
+  },
+  {
+    "Value": "GVP_PROSPECTPHONE",
+    "Text": "GVP_PROSPECTPHONE"
+  },
+  {
+    "Value": "GVP_PROVIDER_COMMUNITY_ID",
+    "Text": "GVP_PROVIDER_COMMUNITY_ID"
+  },
+  {
+    "Value": "GVP_PROVIDER_ID",
+    "Text": "GVP_PROVIDER_ID"
+  },
+  {
+    "Value": "GVP_PROVIDER_NAME",
+    "Text": "GVP_PROVIDER_NAME"
+  },
+  {
+    "Value": "GVP_PROVIDER_VALID_STATUS",
+    "Text": "GVP_PROVIDER_VALID_STATUS"
+  },
+  {
+    "Value": "GVP_PROVIDERTYPE",
+    "Text": "GVP_PROVIDERTYPE"
+  },
+  {
+    "Value": "GVP_PROVIDTYPEENTERED",
+    "Text": "GVP_PROVIDTYPEENTERED"
+  },
+  {
+    "Value": "GVP_RATE_LEVEL",
+    "Text": "GVP_RATE_LEVEL"
+  },
+  {
+    "Value": "GVP_SELF_FUNDING_STATUS",
+    "Text": "GVP_SELF_FUNDING_STATUS"
+  },
+  {
+    "Value": "GVP_SHUTDOWN_SITES",
+    "Text": "GVP_SHUTDOWN_SITES"
+  },
+  {
+    "Value": "GVP_SITE_LOCATION",
+    "Text": "GVP_SITE_LOCATION"
+  },
+  {
+    "Value": "GVP_SSN",
+    "Text": "GVP_SSN"
+  },
+  {
+    "Value": "GVP_SSN4AUTHENTICATIONUSED",
+    "Text": "GVP_SSN4AUTHENTICATIONUSED"
+  },
+  {
+    "Value": "GVP_SSNMATCHED",
+    "Text": "GVP_SSNMATCHED"
+  },
+  {
+    "Value": "GVP_SUBSCRIBER_NAME",
+    "Text": "GVP_SUBSCRIBER_NAME"
+  },
+  {
+    "Value": "GVP_SURVEY_ACCEPTED",
+    "Text": "GVP_SURVEY_ACCEPTED"
+  },
+  {
+    "Value": "GVP_SURVEY_FLAGS",
+    "Text": "GVP_SURVEY_FLAGS"
+  },
+  {
+    "Value": "GVP_SURVEY_ID",
+    "Text": "GVP_SURVEY_ID"
+  },
+  {
+    "Value": "GVP_SURVEY_OFFERED",
+    "Text": "GVP_SURVEY_OFFERED"
+  },
+  {
+    "Value": "GVP_SVC_AREA",
+    "Text": "GVP_SVC_AREA"
+  },
+  {
+    "Value": "GVP_TINMATCHED",
+    "Text": "GVP_TINMATCHED"
+  },
+  {
+    "Value": "GVP_VIP_TIER",
+    "Text": "GVP_VIP_TIER"
+  },
+  {
+    "Value": "GVP_VOICE_FORMS",
+    "Text": "GVP_VOICE_FORMS"
+  },
+  {
+    "Value": "GVP_ZIP",
+    "Text": "GVP_ZIP"
+  },
+  {
+    "Value": "GVP_ZIPVERIFIED",
+    "Text": "GVP_ZIPVERIFIED"
+  },
+  {
+    "Value": "MULTI_AGENT",
+    "Text": "MULTI_AGENT"
+  },
+  {
+    "Value": "OUT_AGE",
+    "Text": "OUT_AGE"
+  },
+  {
+    "Value": "OUT_AGENT_RESULT",
+    "Text": "OUT_AGENT_RESULT"
+  },
+  {
+    "Value": "OUT_APPT_DATE",
+    "Text": "OUT_APPT_DATE"
+  },
+  {
+    "Value": "OUT_APPT_ID",
+    "Text": "OUT_APPT_ID"
+  },
+  {
+    "Value": "OUT_APPT_TIME",
+    "Text": "OUT_APPT_TIME"
+  },
+  {
+    "Value": "OUT_CALLER_ID",
+    "Text": "OUT_CALLER_ID"
+  },
+  {
+    "Value": "OUT_CAMPAIGN_CATEGORY_CODE",
+    "Text": "OUT_CAMPAIGN_CATEGORY_CODE"
+  },
+  {
+    "Value": "OUT_CAMPAIGN_STANDALONE",
+    "Text": "OUT_CAMPAIGN_STANDALONE"
+  },
+  {
+    "Value": "OUT_CANCEL_PHONE_NUMBER",
+    "Text": "OUT_CANCEL_PHONE_NUMBER"
+  },
+  {
+    "Value": "OUT_CANCELABLE",
+    "Text": "OUT_CANCELABLE"
+  },
+  {
+    "Value": "OUT_CHATS_UPDATE_RESULT",
+    "Text": "OUT_CHATS_UPDATE_RESULT"
+  },
+  {
+    "Value": "OUT_CHECK_SUPPRESSION_FLAG",
+    "Text": "OUT_CHECK_SUPPRESSION_FLAG"
+  },
+  {
+    "Value": "OUT_DATE_ROW_CREATED",
+    "Text": "OUT_DATE_ROW_CREATED"
+  },
+  {
+    "Value": "OUT_DEPT_CID",
+    "Text": "OUT_DEPT_CID"
+  },
+  {
+    "Value": "OUT_DIAL_MODE",
+    "Text": "OUT_DIAL_MODE"
+  },
+  {
+    "Value": "OUT_DOCUMENT_CHATS",
+    "Text": "OUT_DOCUMENT_CHATS"
+  },
+  {
+    "Value": "OUT_FACILITY_CID",
+    "Text": "OUT_FACILITY_CID"
+  },
+  {
+    "Value": "OUT_GUARDIAN_FIRST_NAME",
+    "Text": "OUT_GUARDIAN_FIRST_NAME"
+  },
+  {
+    "Value": "OUT_GUARDIAN_LAST_NAME",
+    "Text": "OUT_GUARDIAN_LAST_NAME"
+  },
+  {
+    "Value": "OUT_GUARDIAN_MRN_HRN",
+    "Text": "OUT_GUARDIAN_MRN_HRN"
+  },
+  {
+    "Value": "OUT_IVR_STATUS_RESULT",
+    "Text": "OUT_IVR_STATUS_RESULT"
+  },
+  {
+    "Value": "OUT_MEMBER_FIRST_NAME",
+    "Text": "OUT_MEMBER_FIRST_NAME"
+  },
+  {
+    "Value": "OUT_MEMBER_GENDER",
+    "Text": "OUT_MEMBER_GENDER"
+  },
+  {
+    "Value": "OUT_MEMBER_LAST_NAME",
+    "Text": "OUT_MEMBER_LAST_NAME"
+  },
+  {
+    "Value": "OUT_MESSAGE_NUMBER_LIST",
+    "Text": "OUT_MESSAGE_NUMBER_LIST"
+  },
+  {
+    "Value": "OUT_MINOR_CHILD",
+    "Text": "OUT_MINOR_CHILD"
+  },
+  {
+    "Value": "OUT_MRN_PREFIX",
+    "Text": "OUT_MRN_PREFIX"
+  },
+  {
+    "Value": "OUT_NUM_APPOINTMENTS",
+    "Text": "OUT_NUM_APPOINTMENTS"
+  },
+  {
+    "Value": "OUT_OFFER_AGENT",
+    "Text": "OUT_OFFER_AGENT"
+  },
+  {
+    "Value": "OUT_OFFER_AUTH",
+    "Text": "OUT_OFFER_AUTH"
+  },
+  {
+    "Value": "OUT_OFFER_INBOUND_IVR",
+    "Text": "OUT_OFFER_INBOUND_IVR"
+  },
+  {
+    "Value": "OUT_OFFER_OPTOUT",
+    "Text": "OUT_OFFER_OPTOUT"
+  },
+  {
+    "Value": "OUT_OPT_OUT",
+    "Text": "OUT_OPT_OUT"
+  },
+  {
+    "Value": "OUT_OPTOUT_RESULT",
+    "Text": "OUT_OPTOUT_RESULT"
+  },
+  {
+    "Value": "OUT_OTHER_ID",
+    "Text": "OUT_OTHER_ID"
+  },
+  {
+    "Value": "OUT_OUTBOUND_EXIT_OP",
+    "Text": "OUT_OUTBOUND_EXIT_OP"
+  },
+  {
+    "Value": "OUT_PLAN_CODE_GROUP_NO",
+    "Text": "OUT_PLAN_CODE_GROUP_NO"
+  },
+  {
+    "Value": "OUT_PLAY_PROMPT_1",
+    "Text": "OUT_PLAY_PROMPT_1"
+  },
+  {
+    "Value": "OUT_PLAY_PROMPT_2",
+    "Text": "OUT_PLAY_PROMPT_2"
+  },
+  {
+    "Value": "OUT_PLAY_PROMPT_3",
+    "Text": "OUT_PLAY_PROMPT_3"
+  },
+  {
+    "Value": "OUT_PLAY_PROMPT_4",
+    "Text": "OUT_PLAY_PROMPT_4"
+  },
+  {
+    "Value": "OUT_PLAY_QA_MSG",
+    "Text": "OUT_PLAY_QA_MSG"
+  },
+  {
+    "Value": "OUT_PLAY_XFER_MSG",
+    "Text": "OUT_PLAY_XFER_MSG"
+  },
+  {
+    "Value": "OUT_PRIORITY",
+    "Text": "OUT_PRIORITY"
+  },
+  {
+    "Value": "OUT_RECOGNITION_TYPE",
+    "Text": "OUT_RECOGNITION_TYPE"
+  },
+  {
+    "Value": "OUT_RECORD_ID",
+    "Text": "OUT_RECORD_ID"
+  },
+  {
+    "Value": "OUT_SELF_SVC_ELIGIBLE",
+    "Text": "OUT_SELF_SVC_ELIGIBLE"
+  },
+  {
+    "Value": "OUT_TEXT_MESSAGE",
+    "Text": "OUT_TEXT_MESSAGE"
+  },
+  {
+    "Value": "OUT_TRANSFER_MSG",
+    "Text": "OUT_TRANSFER_MSG"
+  },
+  {
+    "Value": "OUT_TRANSFER_REGION",
+    "Text": "OUT_TRANSFER_REGION"
+  },
+  {
+    "Value": "OUT_VISIT_ID",
+    "Text": "OUT_VISIT_ID"
+  },
+  {
+    "Value": "OUT_VOICEMAIL_MSG",
+    "Text": "OUT_VOICEMAIL_MSG"
+  },
+  {
+    "Value": "SERVICEOBJECTIVE",
+    "Text": "SERVICEOBJECTIVE"
+  },
+  {
+    "Value": "TRANSFERREASON",
+    "Text": "TRANSFERREASON"
+  },
+  {
+    "Value": "URS_ANI",
+    "Text": "URS_ANI"
+  },
+  {
+    "Value": "URS_CALL_CLASSIFICATION",
+    "Text": "URS_CALL_CLASSIFICATION"
+  },
+  {
+    "Value": "URS_DNIS",
+    "Text": "URS_DNIS"
+  },
+  {
+    "Value": "URS_DNIS_DESCRIPTION",
+    "Text": "URS_DNIS_DESCRIPTION"
+  },
+  {
+    "Value": "URS_EMERGENCY",
+    "Text": "URS_EMERGENCY"
+  },
+  {
+    "Value": "URS_EWT",
+    "Text": "URS_EWT"
+  },
+  {
+    "Value": "URS_IVRREENTRY",
+    "Text": "URS_IVRREENTRY"
+  },
+  {
+    "Value": "URS_IVRREENTRY_MENU",
+    "Text": "URS_IVRREENTRY_MENU"
+  },
+  {
+    "Value": "URS_ORIG_SWITCH",
+    "Text": "URS_ORIG_SWITCH"
+  },
+  {
+    "Value": "URS_START_TIME",
+    "Text": "URS_START_TIME"
+  },
+  {
+    "Value": "URS_TRANSFER_TYPE",
+    "Text": "URS_TRANSFER_TYPE"
+  },
+  {
+    "Value": "URS_VIRTUALQUEUE",
+    "Text": "URS_VIRTUALQUEUE"
+  },
+  {
+    "Value": "VHT_VIS_DISPOSITION",
+    "Text": "VHT_VIS_DISPOSITION"
+  }
+]
