@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+<div class="container">
+    <div class="siteheader">
+        <div style="margin-left: 20px; margin-top: 15px">
+            <h4>WDE CallDataWindow Maintenance Tool</h4>
+        </div>
+    </div>
+
+    <div>
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent Context="ex">
+                <p class="error">@ex.Message</p>
+            </ErrorContent>
+        </ErrorBoundary>
+    </div>
+</div>
+
+<footer style="color: red; margin-left: 20px; margin-top: 50px; font-size: medium; white-space: break-spaces">
+    <strong>
+        Note: Genesys UserData Keys change often.  We're unable to display a current list.  Please ensure that spelling and case-sensitivity are correct.
+    </strong>
+</footer>

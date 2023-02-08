@@ -1,0 +1,38 @@
+﻿[
+  {
+    "code": "GA",
+    "description": "Georgia"
+  },
+  {
+    "code": "HI",
+    "description": "Hawaii"
+  },
+  {
+    "code": "MAS",
+    "description": "Mid-Atlantic States"
+  },
+  {
+    "code": "NCAL",
+    "description": "Northern California"
+  },
+  {
+    "code": "NW",
+    "description": "NorthWest"
+  },
+  {
+    "code": "PDC",
+    "description": "The Lab"
+  },
+  {
+    "code": "SCAL",
+    "description": "Southern California"
+  },
+  {
+    "code": "UMOC",
+    "description": "UMoC"
+  },
+  {
+    "code": "WA",
+    "description": "Washington"
+  }
+]

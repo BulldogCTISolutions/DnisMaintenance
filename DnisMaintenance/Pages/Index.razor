@@ -1,0 +1,260 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<PageTitle>DNIS Maintenance</PageTitle>
+
+<div style="content; margin-left: 20px;">
+    <div style="margin-top: 10px;">
+        <FluentSelect Id="selectRegion"
+                      Position="SelectPosition.Below"
+                      Items="@this._regionOptions"
+                      OptionText="@(r => r.Text)"
+                      OptionValue="@(r => r.Value)"
+                      ValueChanged="@( (string selectedRegion) => OnChangeSelectedRegion(selectedRegion) )" />
+    </div>
+
+    <div style="margin-top: 10px">
+        <FluentSelect Id="selectDnis"
+                      Disabled="@this._disableDNISSelect"
+                      Position="SelectPosition.Below"
+                      Items="@this._dnisOptions"
+                      OptionText="@(i => i.Text)"
+                      OptionValue="@(i => i.Value)"
+                      ValueChanged="@( (string selectedDNIS) => OnChangeSelectedDnis(selectedDNIS) )" />
+        <FluentTextArea Style="width: 100%; margin-top: 10px" Value="@this._dnisScript">Script</FluentTextArea>
+    </div>
+
+   @* <div>
+        <FluentCombobox Id="comboBoxKVPs"
+                        Items=@this._genesysKvpOptions
+                        OptionDisabled="@(k => k.Disabled)"
+                        OptionSelected="@(k => k.Selected)"
+                        OptionValue="@(k => k.Value)"
+                        OptionText="@(k => k.Text)"
+                        Autocomplete="ComboboxAutocomplete.Both"
+                        Position="SelectPosition.Below"
+                        @bind-Value="@this._comboxboxSelectedValue" />
+    </div>*@
+
+    <div style="margin-top: 10px">
+        <FluentDataGrid @ref="gridKVPs" RowsData=@this._gridKvpList GridTemplateColumns="1fr 1fr 0.5fr 0.4fr 0.4fr" TGridItem=KvpList>
+            <TemplateColumn Title="Friendly Name" Align="Align.Left">
+                <FluentTextField Style="width: 100%;" @bind-Value="@context.FriendlyName" />
+            </TemplateColumn>
+            <TemplateColumn Title="Genesys UserData Key" Align="Align.Left">
+                <FluentTextField Style="width: 100%;" @bind-Value="@context.GenesysKey" />
+            </TemplateColumn>
+            <TemplateColumn Title="Is this an Event Attribute?" Align="Align.Center">
+                <FluentRadioGroup>
+                    @if( context.UseAttribute )
+                    {
+                        <FluentRadio Value="true" Checked="true">Yes</FluentRadio>
+                        <FluentRadio Checked="false">No</FluentRadio>
+                    }
+                    else
+                    {
+                        <FluentRadio Checked="false">Yes</FluentRadio>
+                        <FluentRadio Value="false" Checked="true">No</FluentRadio>
+                    }
+                </FluentRadioGroup>
+            </TemplateColumn>
+            <TemplateColumn Title="View Order" Align="Align.Center">
+                <FluentButton Type="ButtonType.Button"
+                              Style="width: 10%; justify-content: center"
+                              @onclick="@(() => OnClickDownArrow(context))">
+                    <FluentIcon Name="@FluentIcons.ArrowDown" Size="@IconSize.Size16" />
+                </FluentButton>
+                <FluentButton Type="ButtonType.Button"
+                              Style="width: 10%; justify-content: center"
+                              @onclick="@(() => OnClickUpArrow(context))">
+                    <FluentIcon Name="@FluentIcons.ArrowUp" Size="@IconSize.Size16" />
+                </FluentButton>
+            </TemplateColumn>
+            <TemplateColumn Title="Edit" Align="Align.Center">
+                <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickAdd(context))">
+                    <FluentIcon Name="@FluentIcons.Add" Size="@IconSize.Size16" />
+                </FluentButton>
+                <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickDelete(context))">
+                    <FluentIcon Name="@FluentIcons.Delete" Size="@IconSize.Size16" />
+                </FluentButton>
+            </TemplateColumn>
+        </FluentDataGrid>
+    </div>
+</div>
+
+@code
+{
+    
+     //down                       Disabled=@(Int32.Parse(context.ViewOrder) == (this._kvpList.Count()))
+     //up                         Disabled=@(Int32.Parse(context.ViewOrder) == 1)
+
+    private List<Option<string>> _regionOptions = new List<Option<string>>();
+    private List<Option<string>> _dnisOptions = new List<Option<string>>();
+    private List<Option<string>> _genesysKvpOptions = new List<Option<string>>();
+    private CallDataWindowConfiguration? _dnisConfigurations;
+    private List<KvpList> _kvpList;
+    private IQueryable<KvpList>? _gridKvpList;
+    private bool _disableDNISSelect = true;
+    private const string _regionPlaceHolder = "Please select a Region";
+    private const string _dnisPlaceHolder = "Please select a DNIS";
+    private string _dnisScript;
+    private FluentDataGrid<KvpList>? gridKVPs { get; set; }
+    private string _comboxboxSelectedValue;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        List<Region> regions = await Http.GetFromJsonAsync<List<Region>>( "sample-data/regions.json" ).ConfigureAwait( false );
+        if( regions is null )
+        {
+            return;
+        }
+
+        //  This may be a performance hit, but let's sort all the Regions on their description.
+        //  Uses Region.CompareTo().
+        regions.Sort();
+        this._regionOptions.Clear();
+        this._regionOptions.Add( new Option<string> { Value = $"", Text = $"{_regionPlaceHolder}" } );
+        foreach( Region region in regions )
+        {
+            //  This goes to a combobox
+            this._regionOptions.Add( new Option<string> { Value = $"{region.Code}", Text = $"{region.Description}" } );
+        }
+
+        List<GenesysKVP>? genesysKVPs = await Http.GetFromJsonAsync<List<GenesysKVP>>( "sample-data/genesys-kvps.json" ).ConfigureAwait( false );
+        if( genesysKVPs is null )
+        {
+            return;
+        }
+
+        //  This may be a performance hit, but let's sort all the KVPs on their display text.
+        //  uses GenesysKVP.CompareTo().
+        genesysKVPs.Sort();
+        this._genesysKvpOptions.Clear();
+        foreach( GenesysKVP genesysKvp in genesysKVPs )
+        {
+            //  This goes to a combobox
+            this._genesysKvpOptions.Add( new Option<string> { Value = $"{genesysKvp.Value}",
+                                                              Text = $"{genesysKvp.Text}",
+                                                              Selected = genesysKvp.Selected,
+                                                              Disabled = genesysKvp.Disabled} );
+        }
+
+        await base.OnInitializedAsync().ConfigureAwait( false );
+    }
+
+    protected async Task OnChangeSelectedRegion( string selectedRegion )
+    {
+        if( string.IsNullOrEmpty( selectedRegion ) == true )
+        {
+            return;
+        }
+        string rawJson = await Http.GetStringAsync( $"sample-data/{selectedRegion}_DNIS_Configuration.json" ).ConfigureAwait( false );
+        this._dnisConfigurations = CallDataWindowConfiguration.FromJson( rawJson );
+
+        this._dnisOptions.Clear();
+        this._dnisOptions.Add( new Option<string> { Value = $"", Text = $"{_dnisPlaceHolder}" } );
+        foreach( KeyValuePair<string, DnisList> item in this._dnisConfigurations.DnisList[0] )
+        {
+            //  This goes to a combobox
+            this._dnisOptions.Add( new Option<string> { Value = $"{item.Key}", Text = $"{item.Key}" } );
+        }
+        this._disableDNISSelect = false;
+    }
+
+    protected void OnChangeSelectedDnis( string selectedDNIS )
+    {
+        if( string.IsNullOrEmpty( selectedDNIS ) == true )
+        {
+            return;
+        }
+        bool success = this._dnisConfigurations.DnisList[0].TryGetValue( selectedDNIS, out DnisList item );
+        if( success && item is not null )
+        {
+            this._dnisScript = item.Script;
+            this._kvpList?.Clear();
+            this._kvpList = item.KvpList;
+            this._gridKvpList = this._kvpList.AsQueryable();
+            
+        }
+
+        //  Refresh the table
+        //_ = this.RefreshTable();
+        //  TODO: Need to make radio  buttons display state
+    }
+
+    protected void OnClickDownArrow( KvpList? row )
+    {
+        if( row is null )
+        {
+            throw new ArgumentNullException( nameof( row ) );
+        }
+
+        Console.WriteLine( $"Down Arrow Clicked: {row.ViewOrder}" );
+        //  Get the current row id.
+        int viewOrderSelectedItem = Int32.Parse( row.ViewOrder );
+        KvpList selectedRow = this._kvpList.Where( c => c.ViewOrder.Equals( row.ViewOrder, StringComparison.Ordinal ) ).Single();
+        //  Increment to get the next item in KVPList.
+        int nextViewOrderItem = viewOrderSelectedItem + 1;
+        KvpList nextRow = this._kvpList.Where( c => c.ViewOrder.Equals( nextViewOrderItem.ToString(), StringComparison.Ordinal ) ).Single();
+        //  Swap the view orders.
+        selectedRow.ViewOrder = nextViewOrderItem.ToString();
+        nextRow.ViewOrder = viewOrderSelectedItem.ToString();
+        //  Update the kvpList.
+        this._kvpList[viewOrderSelectedItem] = nextRow;
+        this._kvpList[nextViewOrderItem] = selectedRow;
+        //  Refresh the grid.
+        _ = this.RefreshTable();
+    }
+
+    protected void OnClickUpArrow( KvpList? row )
+    {
+        if( row is null )
+        {
+            throw new ArgumentNullException( nameof( row ) );
+        }
+
+        Console.WriteLine( $"Up Arrow Clicked: {row.ViewOrder}" );
+        //  Get the current row id.
+        int viewOrderSelectedItem = Int32.Parse( row.ViewOrder );
+        KvpList selectedRow = this._kvpList.Where( c => c.ViewOrder.Equals( row.ViewOrder, StringComparison.Ordinal ) ).Single();
+        //  Increment to get the previous item in KVPList.
+        int previousViewOrderItem = viewOrderSelectedItem - 1;
+        KvpList previousRow = this._kvpList.Where( c => c.ViewOrder.Equals( previousViewOrderItem.ToString(), StringComparison.Ordinal ) ).Single();
+        //  Swap the view orders.
+        selectedRow.ViewOrder = previousViewOrderItem.ToString();
+        previousRow.ViewOrder = viewOrderSelectedItem.ToString();
+        //  Update the kvpList.
+        this._kvpList[viewOrderSelectedItem] = previousRow;
+        this._kvpList[previousViewOrderItem] = selectedRow;
+        //  Refresh the grid.
+        _ = this.RefreshTable();
+    }
+
+    protected void OnClickAdd( KvpList? row )
+    {
+        if( row is null )
+        {
+            throw new ArgumentNullException( nameof( row ) );
+        }
+
+        Console.WriteLine( $"Add below row: {row.ViewOrder}" );
+    }
+
+    protected void OnClickDelete( KvpList? row )
+    {
+        if( row is null )
+        {
+            throw new ArgumentNullException( nameof( row ) );
+        }
+
+        Console.WriteLine( $"Delete row: {row.ViewOrder}" );
+    }
+
+    private async Task RefreshTable()
+    {
+        await gridKVPs?.RefreshDataAsync();
+        //await this.gridKVPs?.SortByColumnAsync( ViewOrder, SortDirection.Ascending );
+        StateHasChanged();
+    }
+}

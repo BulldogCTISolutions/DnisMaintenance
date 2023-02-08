@@ -1,0 +1,127 @@
+﻿{
+  "DNIS_List": [
+    {
+      "9931009246": {
+        "script": "Hello. I am ##FIRSTNAME##.  How can I help you today?",
+        "KVP_List": [
+          {
+            "viewOrder": "1",
+            "friendlyName": "MRN",
+            "genesysKey": "CustomerID"
+          },
+          {
+            "viewOrder": "2",
+            "friendlyName": "CCSTI Report Tracking",
+            "genesysKey": "CONNID"
+          },
+          {
+            "viewOrder": "3",
+            "friendlyName": "IVR Validated?",
+            "genesysKey": "GVP_MEMBER_AUTH_STATUS"
+          },
+          {
+            "viewOrder": "4",
+            "friendlyName": "IVR Exit Reason",
+            "genesysKey": "GVP_IVR_EXIT_REASON"
+          },
+          {
+            "viewOrder": "5",
+            "friendlyName": "Member Region",
+            "genesysKey": "CustomerSegment"
+          },
+          {
+            "viewOrder": "6",
+            "friendlyName": "Caller ID",
+            "genesysKey": "ANI",
+            "useAttribute": true
+          },
+          {
+            "viewOrder": "7",
+            "friendlyName": "Employer Group",
+            "genesysKey": "URS_VIRTUALQUEUE"
+          }
+        ]
+      },
+      "9931008822": {
+        "script": "Hello. I am ##FIRSTNAME##.  How can I help you today?",
+        "KVP_List": [
+          {
+            "viewOrder": "1",
+            "friendlyName": "MRN",
+            "genesysKey": "CustomerID"
+          },
+          {
+            "viewOrder": "2",
+            "friendlyName": "CCSTI Report Tracking",
+            "genesysKey": "CONNID"
+          },
+          {
+            "viewOrder": "3",
+            "friendlyName": "IVR Validated?",
+            "genesysKey": "GVP_MEMBER_AUTH_STATUS"
+          },
+          {
+            "viewOrder": "4",
+            "friendlyName": "IVR Exit Reason",
+            "genesysKey": "GVP_IVR_EXIT_REASON"
+          },
+          {
+            "viewOrder": "5",
+            "friendlyName": "Member Region",
+            "genesysKey": "CustomerSegment"
+          },
+          {
+            "viewOrder": "6",
+            "friendlyName": "Caller ID",
+            "genesysKey": "URS_ANI"
+          },
+          {
+            "viewOrder": "7",
+            "friendlyName": "Employer Group",
+            "genesysKey": "URS_VIRTUALQUEUE"
+          }
+        ]
+      },
+      "9931008801": {
+        "script": "Hello. I am ##FIRSTNAME##.  How can I help you today?",
+        "KVP_List": [
+          {
+            "viewOrder": "1",
+            "friendlyName": "MRN",
+            "genesysKey": "CustomerID"
+          },
+          {
+            "viewOrder": "2",
+            "friendlyName": "CCSTI Report Tracking",
+            "genesysKey": "CONNID"
+          },
+          {
+            "viewOrder": "3",
+            "friendlyName": "IVR Validated?",
+            "genesysKey": "GVP_MEMBER_AUTH_STATUS"
+          },
+          {
+            "viewOrder": "4",
+            "friendlyName": "IVR Exit Reason",
+            "genesysKey": "GVP_IVR_EXIT_REASON"
+          },
+          {
+            "viewOrder": "5",
+            "friendlyName": "Member Region",
+            "genesysKey": "CustomerSegment"
+          },
+          {
+            "viewOrder": "6",
+            "friendlyName": "Caller ID",
+            "genesysKey": "URS_ANI"
+          },
+          {
+            "viewOrder": "7",
+            "friendlyName": "Employer Group",
+            "genesysKey": "URS_VIRTUALQUEUE"
+          }
+        ]
+      }
+    }
+  ]
+}
