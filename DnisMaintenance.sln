@@ -1,9 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnisMaintenance", "DnisMaintenance/DnisMaintenance.csproj", "{41A6C5CE-066D-4938-864D-91B48381C0A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnisMaintenance", "DnisMaintenance\DnisMaintenance.csproj", "{41A6C5CE-066D-4938-864D-91B48381C0A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
