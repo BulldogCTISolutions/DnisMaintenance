@@ -3,7 +3,7 @@
 
 <PageTitle>DNIS Maintenance</PageTitle>
 
-<div style="content; margin-left: 20px;">
+<div style="margin-left: 20px;">
     <div style="margin-top: 10px;">
         <FluentSelect Id="selectRegion"
                       Position="SelectPosition.Below"
@@ -24,82 +24,119 @@
         <FluentTextArea Style="width: 100%; margin-top: 10px" Value="@this._dnisScript">Script</FluentTextArea>
     </div>
 
-   @* <div>
-        <FluentCombobox Id="comboBoxKVPs"
-                        Items=@this._genesysKvpOptions
-                        OptionDisabled="@(k => k.Disabled)"
-                        OptionSelected="@(k => k.Selected)"
-                        OptionValue="@(k => k.Value)"
-                        OptionText="@(k => k.Text)"
-                        Autocomplete="ComboboxAutocomplete.Both"
-                        Position="SelectPosition.Below"
-                        @bind-Value="@this._comboxboxSelectedValue" />
-    </div>*@
+    @*    RowsData=@this._gridKvpList
+    *@    <div style="margin-top: 10px">
+        <FluentDataGrid @ref="GridOfKvps"
+                        RowsDataProvider="this._gridItemsProvider"
+                        GridTemplateColumns="1fr 1fr 0.5fr 0.4fr 0.4fr"
+                        TGridItem=KvpList
+                        OnRowFocus="(() => this.OnRowFocus())">
 
-    <div style="margin-top: 10px">
-        <FluentDataGrid @ref="gridKVPs" RowsData=@this._gridKvpList GridTemplateColumns="1fr 1fr 0.5fr 0.4fr 0.4fr" TGridItem=KvpList>
             <TemplateColumn Title="Friendly Name" Align="Align.Left">
                 <FluentTextField Style="width: 100%;" @bind-Value="@context.FriendlyName" />
             </TemplateColumn>
+
             <TemplateColumn Title="Genesys UserData Key" Align="Align.Left">
                 <FluentTextField Style="width: 100%;" @bind-Value="@context.GenesysKey" />
             </TemplateColumn>
+
             <TemplateColumn Title="Is this an Event Attribute?" Align="Align.Center">
-                <FluentRadioGroup>
-                    @if( context.UseAttribute )
-                    {
-                        <FluentRadio Value="true" Checked="true">Yes</FluentRadio>
-                        <FluentRadio Checked="false">No</FluentRadio>
-                    }
-                    else
-                    {
-                        <FluentRadio Checked="false">Yes</FluentRadio>
-                        <FluentRadio Value="false" Checked="true">No</FluentRadio>
-                    }
+                <FluentRadioGroup Orientation="Orientation.Horizontal">
+                    <FluentRadio Id="radioYes" Value="true" Checked="@context.UseAttribute">Yes</FluentRadio>
+                    <FluentRadio Id="radioNo" Value="false" Checked="@(!(context.UseAttribute))">No</FluentRadio>
                 </FluentRadioGroup>
             </TemplateColumn>
+
             <TemplateColumn Title="View Order" Align="Align.Center">
                 <FluentButton Type="ButtonType.Button"
                               Style="width: 10%; justify-content: center"
+                              Disabled=@(Int32.Parse(context.ViewOrder) == (this._kvpList.Count()))
                               @onclick="@(() => OnClickDownArrow(context))">
                     <FluentIcon Name="@FluentIcons.ArrowDown" Size="@IconSize.Size16" />
                 </FluentButton>
                 <FluentButton Type="ButtonType.Button"
                               Style="width: 10%; justify-content: center"
+                              Disabled=@(Int32.Parse(context.ViewOrder) == 1)
                               @onclick="@(() => OnClickUpArrow(context))">
                     <FluentIcon Name="@FluentIcons.ArrowUp" Size="@IconSize.Size16" />
                 </FluentButton>
             </TemplateColumn>
+
             <TemplateColumn Title="Edit" Align="Align.Center">
-                <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickAdd(context))">
+                <FluentButton Type="ButtonType.Button"
+                              Style="width: 10%; justify-content: center"
+                              @onclick="@(() => OnClickAdd(context))">
                     <FluentIcon Name="@FluentIcons.Add" Size="@IconSize.Size16" />
                 </FluentButton>
-                <FluentButton Type="ButtonType.Button" Style="width: 10%; justify-content: center" @onclick="@(() => OnClickDelete(context))">
+                <FluentButton Type="ButtonType.Button"
+                              Style="width: 10%; justify-content: center"
+                              @onclick="@(() => OnClickDelete(context))">
                     <FluentIcon Name="@FluentIcons.Delete" Size="@IconSize.Size16" />
                 </FluentButton>
             </TemplateColumn>
+
         </FluentDataGrid>
+    </div>
+
+    <div style="margin-left: 10px; margin-top: 50px">
+        <FluentButton Type="ButtonType.Submit"
+                      Appearance="Appearance.Accent"
+                      Disabled="@this._disableButtons"
+                      @onclick="@(() => OnClickSave())">
+            Save all changes
+            <FluentIcon Name="@FluentIcons.Save" Color="Color.FillInverse" Slot="start" Size="@IconSize.Size16" />
+        </FluentButton>
+        <FluentButton Type="ButtonType.Reset"
+                      Appearance="Appearance.Accent"
+                      Disabled="@this._disableButtons"
+                      @onclick="@(() => OnClickUndo())">
+            Undo all changes
+            <FluentIcon Name="@FluentIcons.ArrowUndo" Color="Color.FillInverse" Slot="start" Size="@IconSize.Size16" />
+        </FluentButton>
+    </div>
+
+    <div style="margin-left: 10px; margin-top: 30px">
+        <label style="color: red; font-size: medium; white-space: break-spaces"
+               for="listBoxKVPs">
+            <strong>These are the currently known Genesys Keys.<br />If you are using a value not defined in this list, please ensure that spelling and case-sensitivity are correct.
+            </strong>
+        </label>
+        <FluentListbox Id="listBoxKVPs"
+                       TOption="GenesysKVP"
+                       Items=@this._genesysKVPs
+                       Height="200px"
+                       Width="300px"
+                       OptionDisabled="@(k => k.Disabled)"
+                       OptionSelected="@(k => k.Selected)"
+                       OptionValue="@(k => k.Value)"
+                       OptionText="@(k => k.Text)"
+                       @bind-Value="@this._listboxSelectedValue"
+                       @bind-SelectedOption="@this._listboxSelectedItem" />
+        <p style="margin-top: 10px;">
+            Copy and paste this value into the grid above: @this._listboxSelectedValue
+        </p>
     </div>
 </div>
 
 @code
 {
-    
-     //down                       Disabled=@(Int32.Parse(context.ViewOrder) == (this._kvpList.Count()))
-     //up                         Disabled=@(Int32.Parse(context.ViewOrder) == 1)
-
-    private List<Option<string>> _regionOptions = new List<Option<string>>();
-    private List<Option<string>> _dnisOptions = new List<Option<string>>();
-    private List<Option<string>> _genesysKvpOptions = new List<Option<string>>();
-    private CallDataWindowConfiguration? _dnisConfigurations;
-    private List<KvpList> _kvpList;
-    private IQueryable<KvpList>? _gridKvpList;
-    private bool _disableDNISSelect = true;
     private const string _regionPlaceHolder = "Please select a Region";
     private const string _dnisPlaceHolder = "Please select a DNIS";
+    private bool _disableDNISSelect = true;
+    private bool _disableButtons = true;
     private string _dnisScript;
-    private FluentDataGrid<KvpList>? gridKVPs { get; set; }
-    private string _comboxboxSelectedValue;
+    private string? _listboxSelectedValue;
+    private CallDataWindowConfiguration? _dnisConfigurations;
+    private List<KvpList> _kvpList;
+    private List<GenesysKVP>? _genesysKVPs;
+    private GenesysKVP? _listboxSelectedItem;
+    private List<Option<string>> _regionOptions = new List<Option<string>>();
+    private List<Option<string>> _dnisOptions = new List<Option<string>>();
+    private FluentDataGrid<KvpList>? GridOfKvps { get; set; }
+    private FluentRadio radioYes { get; set; }
+    private FluentRadio radioNo { get; set; }
+
+    private GridItemsProvider<KvpList> _gridItemsProvider = default!;
 
 
     protected override async Task OnInitializedAsync()
@@ -121,24 +158,15 @@
             this._regionOptions.Add( new Option<string> { Value = $"{region.Code}", Text = $"{region.Description}" } );
         }
 
-        List<GenesysKVP>? genesysKVPs = await Http.GetFromJsonAsync<List<GenesysKVP>>( "sample-data/genesys-kvps.json" ).ConfigureAwait( false );
-        if( genesysKVPs is null )
+        _genesysKVPs = await Http.GetFromJsonAsync<List<GenesysKVP>>( "sample-data/genesys-kvps.json" ).ConfigureAwait( false );
+        if( _genesysKVPs is null )
         {
             return;
         }
 
         //  This may be a performance hit, but let's sort all the KVPs on their display text.
         //  uses GenesysKVP.CompareTo().
-        genesysKVPs.Sort();
-        this._genesysKvpOptions.Clear();
-        foreach( GenesysKVP genesysKvp in genesysKVPs )
-        {
-            //  This goes to a combobox
-            this._genesysKvpOptions.Add( new Option<string> { Value = $"{genesysKvp.Value}",
-                                                              Text = $"{genesysKvp.Text}",
-                                                              Selected = genesysKvp.Selected,
-                                                              Disabled = genesysKvp.Disabled} );
-        }
+        _genesysKVPs.Sort();
 
         await base.OnInitializedAsync().ConfigureAwait( false );
     }
@@ -172,15 +200,16 @@
         if( success && item is not null )
         {
             this._dnisScript = item.Script;
-            this._kvpList?.Clear();
             this._kvpList = item.KvpList;
-            this._gridKvpList = this._kvpList.AsQueryable();
-            
+            //  Initialize the data provider.
+            var gridItemsProviderResult = GridItemsProviderResult.From( _kvpList, _kvpList.Count() );
+            _gridItemsProvider = req => ValueTask.FromResult( gridItemsProviderResult );
         }
+    }
 
-        //  Refresh the table
-        //_ = this.RefreshTable();
-        //  TODO: Need to make radio  buttons display state
+    protected void OnRowFocus()
+    {
+        this._disableButtons = false;
     }
 
     protected void OnClickDownArrow( KvpList? row )
@@ -200,9 +229,9 @@
         //  Swap the view orders.
         selectedRow.ViewOrder = nextViewOrderItem.ToString();
         nextRow.ViewOrder = viewOrderSelectedItem.ToString();
-        //  Update the kvpList.
-        this._kvpList[viewOrderSelectedItem] = nextRow;
-        this._kvpList[nextViewOrderItem] = selectedRow;
+        //  Update the kvpList.  (subtract one because Lists are zero-based)
+        this._kvpList[viewOrderSelectedItem - 1] = nextRow;
+        this._kvpList[nextViewOrderItem - 1] = selectedRow;
         //  Refresh the grid.
         _ = this.RefreshTable();
     }
@@ -224,9 +253,9 @@
         //  Swap the view orders.
         selectedRow.ViewOrder = previousViewOrderItem.ToString();
         previousRow.ViewOrder = viewOrderSelectedItem.ToString();
-        //  Update the kvpList.
-        this._kvpList[viewOrderSelectedItem] = previousRow;
-        this._kvpList[previousViewOrderItem] = selectedRow;
+        //  Update the kvpList.  (subtract one because Lists are zero-based)
+        this._kvpList[viewOrderSelectedItem - 1] = previousRow;
+        this._kvpList[previousViewOrderItem - 1] = selectedRow;
         //  Refresh the grid.
         _ = this.RefreshTable();
     }
@@ -253,8 +282,18 @@
 
     private async Task RefreshTable()
     {
-        await gridKVPs?.RefreshDataAsync();
-        //await this.gridKVPs?.SortByColumnAsync( ViewOrder, SortDirection.Ascending );
-        StateHasChanged();
+        await GridOfKvps?.RefreshDataAsync();
+    }
+
+    protected void OnClickSave()
+    {
+        //  Commit grid to file.
+        Console.WriteLine( $"Save" );
+    }
+
+    protected void OnClickUndo()
+    {
+        //  Refresh grid from file.
+        Console.WriteLine( $"Undo" );
     }
 }

@@ -4,8 +4,12 @@
     "Text": "AGENT_LOB_CROSSOVER"
   },
   {
-    "Value": "BUSINESS_RESULT",
-    "Text": "BUSINESS_RESULT"
+    "Value": "Business_Result",
+    "Text": "Business_Result"
+  },
+  {
+    "Value": "CONNID",
+    "Text": "CONNID"
   },
   {
     "Value": "CTI_TRANSFER",
@@ -16,12 +20,12 @@
     "Text": "CTI_UPDATED_MRN"
   },
   {
-    "Value": "CUSTOMERID",
-    "Text": "CUSTOMERID"
+    "Value": "CustomerID",
+    "Text": "CustomerID"
   },
   {
-    "Value": "CUSTOMERSEGMENT",
-    "Text": "CUSTOMERSEGMENT"
+    "Value": "CustomerSegment",
+    "Text": "CustomerSegment"
   },
   {
     "Value": "GSW_AGENT_ID",
@@ -116,6 +120,14 @@
     "Text": "GSW_TZ_OFFSET"
   },
   {
+    "Value": "GVP_ALLOTHER_FL",
+    "Text": "GVP_ALLOTHER_FL"
+  },
+  {
+    "Value": "GVP_ANI",
+    "Text": "GVP_ANI"
+  },
+  {
     "Value": "GVP_ANI_MATCH_AUTHENTICATED",
     "Text": "GVP_ANI_MATCH_AUTHENTICATED"
   },
@@ -126,6 +138,10 @@
   {
     "Value": "GVP_ANI_MATCHED",
     "Text": "GVP_ANI_MATCHED"
+  },
+  {
+    "Value": "GVP_ANI_PHONE_TYPE",
+    "Text": "GVP_ANI_PHONE_TYPE"
   },
   {
     "Value": "GVP_APP_LABEL",
@@ -144,6 +160,10 @@
     "Text": "GVP_CALLERTYPE"
   },
   {
+    "Value": "GVP_CROSSOVER_FL",
+    "Text": "GVP_CROSSOVER_FL"
+  },
+  {
     "Value": "GVP_CAMPAIGN_CODE",
     "Text": "GVP_CAMPAIGN_CODE"
   },
@@ -160,12 +180,20 @@
     "Text": "GVP_CUSTOMERIDTYPEENTERED"
   },
   {
+    "Value": "GVP_DHMO_FL",
+    "Text": "GVP_DHMO_FL"
+  },
+  {
     "Value": "GVP_DOB",
     "Text": "GVP_DOB"
   },
   {
     "Value": "GVP_DOBVERIFIED",
     "Text": "GVP_DOBVERIFIED"
+  },
+  {
+    "Value": "GVP_EMPLOYEE_ID",
+    "Text": "GVP_EMPLOYEE_ID"
   },
   {
     "Value": "GVP_EMPLOYER_GROUP",
@@ -216,6 +244,10 @@
     "Text": "GVP_LOB"
   },
   {
+    "Value": "GVP_MEDICARE_FL",
+    "Text": "GVP_MEDICARE_FL"
+  },
+  {
     "Value": "GVP_MEDICARE_STATUS",
     "Text": "GVP_MEDICARE_STATUS"
   },
@@ -226,6 +258,10 @@
   {
     "Value": "GVP_MEMBER_NAME",
     "Text": "GVP_MEMBER_NAME"
+  },
+  {
+    "Value": "GVP_MEMBER_PROFILE_INFO",
+    "Text": "GVP_MEMBER_PROFILE_INFO"
   },
   {
     "Value": "GVP_MEMBER_VALIDATION_STATUS",
@@ -252,8 +288,12 @@
     "Text": "GVP_PHARMACY_ID"
   },
   {
-    "Value": "GVP_PREAUTHANNOUNCEMENTPLAYED",
-    "Text": "GVP_PREAUTHANNOUNCEMENTPLAYED"
+    "Value": "GVP_PLAN_TYPE",
+    "Text": "GVP_PLAN_TYPE"
+  },
+  {
+    "Value": "GVP_PreAuthAnnouncementPlayed",
+    "Text": "GVP_PreAuthAnnouncementPlayed"
   },
   {
     "Value": "GVP_PROGRAM_CARRIER",
@@ -312,8 +352,8 @@
     "Text": "GVP_SSN"
   },
   {
-    "Value": "GVP_SSN4AUTHENTICATIONUSED",
-    "Text": "GVP_SSN4AUTHENTICATIONUSED"
+    "Value": "GVP_SSN4AuthenticationUsed",
+    "Text": "GVP_SSN4AuthenticationUsed"
   },
   {
     "Value": "GVP_SSNMATCHED",
@@ -340,8 +380,20 @@
     "Text": "GVP_SURVEY_OFFERED"
   },
   {
+    "Value": "GVP_SURVEY_TYPE",
+    "Text": "GVP_SURVEY_TYPE"
+  },
+  {
     "Value": "GVP_SVC_AREA",
     "Text": "GVP_SVC_AREA"
+  },
+  {
+    "Value": "GVP_TAXID",
+    "Text": "GVP_TAXID"
+  },
+  {
+    "Value": "GVP_TAXID_MATCHED",
+    "Text": "GVP_TAXID_MATCHED"
   },
   {
     "Value": "GVP_TINMATCHED",

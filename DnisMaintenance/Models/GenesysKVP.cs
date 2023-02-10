@@ -19,5 +19,9 @@ public class GenesysKVP : IComparable
                    ? 1
                    : string.Compare( this.Text, other.Text, StringComparison.OrdinalIgnoreCase );
     }
-}
 
+    public override string ToString()
+    {
+        return $"Genesys KVP: [ Text = {this.Text}, Value = {this.Value}, Selected = {this.Selected}, Disabled = {this.Disabled} ]";
+    }
+}
