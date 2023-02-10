@@ -27,7 +27,7 @@
     @*    RowsData=@this._gridKvpList
     *@    <div style="margin-top: 10px">
         <FluentDataGrid @ref="GridOfKvps"
-                        RowsDataProvider="this._gridItemsProvider"
+                        RowsData=@this._gridKvpList"
                         GridTemplateColumns="1fr 1fr 0.5fr 0.4fr 0.4fr"
                         TGridItem=KvpList
                         OnRowFocus="(() => this.OnRowFocus())">
@@ -136,7 +136,7 @@
     private FluentRadio radioYes { get; set; }
     private FluentRadio radioNo { get; set; }
 
-    private GridItemsProvider<KvpList> _gridItemsProvider = default!;
+    private IQueryable<KvpList>? _gridKvpList;
 
 
     protected override async Task OnInitializedAsync()
@@ -201,9 +201,7 @@
         {
             this._dnisScript = item.Script;
             this._kvpList = item.KvpList;
-            //  Initialize the data provider.
-            var gridItemsProviderResult = GridItemsProviderResult.From( _kvpList, _kvpList.Count() );
-            _gridItemsProvider = req => ValueTask.FromResult( gridItemsProviderResult );
+            this._gridKvpList = this._kvpList.AsQueryable();
         }
     }
 
