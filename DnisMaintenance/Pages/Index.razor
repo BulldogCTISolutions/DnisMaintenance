@@ -27,7 +27,7 @@
     @*    RowsData=@this._gridKvpList
     *@    <div style="margin-top: 10px">
         <FluentDataGrid @ref="GridOfKvps"
-                        RowsData=@this._gridKvpList"
+                        RowsData="@this._gridKvpList"
                         GridTemplateColumns="1fr 1fr 0.5fr 0.4fr 0.4fr"
                         TGridItem=KvpList
                         OnRowFocus="(() => this.OnRowFocus())">
