@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject HttpClient Http
+@inject ILogger<Index> logger;
 
 <PageTitle>DNIS Maintenance</PageTitle>
 
@@ -27,10 +28,14 @@
     @*    RowsData=@this._gridKvpList
     *@    <div style="margin-top: 10px">
         <FluentDataGrid @ref="GridOfKvps"
-                        RowsData="@this._gridKvpList"
-                        GridTemplateColumns="1fr 1fr 0.5fr 0.4fr 0.4fr"
+                        RowsDataProvider="this._gridItemsProvider"
+                        GridTemplateColumns="0fr 1fr 1fr 0.5fr 0.4fr 0.4fr"
                         TGridItem=KvpList
                         OnRowFocus="(() => this.OnRowFocus())">
+
+            <TemplateColumn IsDefaultSort="SortDirection.Ascending" Class="hide-this-column">
+                <PropertyColumn Property="@(c => c.ViewOrder)" />
+            </TemplateColumn>
 
             <TemplateColumn Title="Friendly Name" Align="Align.Left">
                 <FluentTextField Style="width: 100%;" @bind-Value="@context.FriendlyName" />
@@ -41,9 +46,9 @@
             </TemplateColumn>
 
             <TemplateColumn Title="Is this an Event Attribute?" Align="Align.Center">
-                <FluentRadioGroup Orientation="Orientation.Horizontal">
-                    <FluentRadio Id="radioYes" Value="true" Checked="@context.UseAttribute">Yes</FluentRadio>
-                    <FluentRadio Id="radioNo" Value="false" Checked="@(!(context.UseAttribute))">No</FluentRadio>
+                <FluentRadioGroup Orientation="Orientation.Horizontal" Value="@(context.UseAttribute.ToString())">
+                    <FluentRadio Value="True">Yes</FluentRadio>
+                    <FluentRadio Value="False">No</FluentRadio>
                 </FluentRadioGroup>
             </TemplateColumn>
 
@@ -98,7 +103,8 @@
     <div style="margin-left: 10px; margin-top: 30px">
         <label style="color: red; font-size: medium; white-space: break-spaces"
                for="listBoxKVPs">
-            <strong>These are the currently known Genesys Keys.<br />If you are using a value not defined in this list, please ensure that spelling and case-sensitivity are correct.
+            <strong>
+                These are the currently known Genesys Keys.<br />If you are using a value not defined in this list, please ensure that spelling and case-sensitivity are correct.
             </strong>
         </label>
         <FluentListbox Id="listBoxKVPs"
@@ -133,10 +139,8 @@
     private List<Option<string>> _regionOptions = new List<Option<string>>();
     private List<Option<string>> _dnisOptions = new List<Option<string>>();
     private FluentDataGrid<KvpList>? GridOfKvps { get; set; }
-    private FluentRadio radioYes { get; set; }
-    private FluentRadio radioNo { get; set; }
 
-    private IQueryable<KvpList>? _gridKvpList;
+    private GridItemsProvider<KvpList> _gridItemsProvider = default!;
 
 
     protected override async Task OnInitializedAsync()
@@ -201,7 +205,9 @@
         {
             this._dnisScript = item.Script;
             this._kvpList = item.KvpList;
-            this._gridKvpList = this._kvpList.AsQueryable();
+            //  Initialize the data provider.
+            var gridItemsProviderResult = GridItemsProviderResult.From( _kvpList, _kvpList.Count() );
+            _gridItemsProvider = req => ValueTask.FromResult( gridItemsProviderResult );
         }
     }
 
@@ -217,7 +223,7 @@
             throw new ArgumentNullException( nameof( row ) );
         }
 
-        Console.WriteLine( $"Down Arrow Clicked: {row.ViewOrder}" );
+        logger.LogInformation( $"Down Arrow Clicked: {row.ViewOrder}" );
         //  Get the current row id.
         int viewOrderSelectedItem = Int32.Parse( row.ViewOrder );
         KvpList selectedRow = this._kvpList.Where( c => c.ViewOrder.Equals( row.ViewOrder, StringComparison.Ordinal ) ).Single();
@@ -231,7 +237,7 @@
         this._kvpList[viewOrderSelectedItem - 1] = nextRow;
         this._kvpList[nextViewOrderItem - 1] = selectedRow;
         //  Refresh the grid.
-        _ = this.RefreshTable();
+        _ = this.RefreshTable( row );
     }
 
     protected void OnClickUpArrow( KvpList? row )
@@ -241,7 +247,7 @@
             throw new ArgumentNullException( nameof( row ) );
         }
 
-        Console.WriteLine( $"Up Arrow Clicked: {row.ViewOrder}" );
+        logger.LogInformation( $"Up Arrow Clicked: {row.ViewOrder}" );
         //  Get the current row id.
         int viewOrderSelectedItem = Int32.Parse( row.ViewOrder );
         KvpList selectedRow = this._kvpList.Where( c => c.ViewOrder.Equals( row.ViewOrder, StringComparison.Ordinal ) ).Single();
@@ -255,7 +261,7 @@
         this._kvpList[viewOrderSelectedItem - 1] = previousRow;
         this._kvpList[previousViewOrderItem - 1] = selectedRow;
         //  Refresh the grid.
-        _ = this.RefreshTable();
+        _ = this.RefreshTable( row );
     }
 
     protected void OnClickAdd( KvpList? row )
@@ -265,7 +271,26 @@
             throw new ArgumentNullException( nameof( row ) );
         }
 
-        Console.WriteLine( $"Add below row: {row.ViewOrder}" );
+        logger.LogInformation( $"Add below row: {row.ViewOrder}" );
+        //  Add a blank entry to the List.
+        int currentRow = Int32.Parse( row.ViewOrder );
+        int currentCount = this._kvpList.Count();
+        //  Iterate through the List and increment the ViewOrder value.
+        //  Remember List is zero-based, and ViewOrder is one-based.
+        for( int i = currentCount; i > currentRow; --i )
+        {
+            //  Take the previous item from the List and update it's ViewOrder.
+            KvpList previousItem = this._kvpList[i - 1];
+            previousItem.ViewOrder = ( i + 1 ).ToString();
+            //  This should leave a hole where the previous item was.
+        }
+        KvpList blankKvpList = new KvpList()
+            {
+                ViewOrder = ( currentRow + 1 ).ToString()
+            };
+        this._kvpList.Add( blankKvpList );
+        //  Refresh the grid.
+        _ = this.RefreshTable( row );
     }
 
     protected void OnClickDelete( KvpList? row )
@@ -275,23 +300,25 @@
             throw new ArgumentNullException( nameof( row ) );
         }
 
-        Console.WriteLine( $"Delete row: {row.ViewOrder}" );
+        logger.LogInformation( $"Delete row: {row.ViewOrder}" );
     }
 
-    private async Task RefreshTable()
+    private async Task RefreshTable( KvpList row )
     {
         await GridOfKvps?.RefreshDataAsync();
+        //  error CS1503: Argument 1: cannot convert from 'string' to 'Microsoft.Fast.Components.FluentUI.ColumnBase<DnisMaintenance.Models.KvpList>'
+        //await GridOfKvps?.SortByColumnAsync( row.ViewOrder, SortDirection.Ascending );
     }
 
     protected void OnClickSave()
     {
         //  Commit grid to file.
-        Console.WriteLine( $"Save" );
+        logger.LogInformation( $"Save" );
     }
 
     protected void OnClickUndo()
     {
         //  Refresh grid from file.
-        Console.WriteLine( $"Undo" );
+        logger.LogInformation( $"Undo" );
     }
 }

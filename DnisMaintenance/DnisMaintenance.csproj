@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0</TargetFrameworks>
@@ -15,7 +15,7 @@
 	<ItemGroup Condition="$(TargetFramework)=='net7.0' ">
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.*" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.Fast.Components.FluentUI" Version="2.*" />
+		<PackageReference Include="Microsoft.Fast.Components.FluentUI" Version="2.0.5" />
 	        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 	        <PackageReference Include="System.Text.Json" Version="7.0.1" />
 	</ItemGroup>
