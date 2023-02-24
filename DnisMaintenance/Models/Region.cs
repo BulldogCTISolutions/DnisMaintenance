@@ -1,8 +1,18 @@
-﻿namespace DnisMaintenance.Models;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-public class Region : IComparable
+namespace DnisMaintenance.Models;
+
+public partial class Region : IComparable
 {
+    [JsonConstructor]
+    public Region( string code, string description ) =>
+                 (this.Code, this.Description) = (code, description);
+
+    [JsonPropertyName( "code" )]
     public string Code { get; set; }
+    [JsonPropertyName( "description" )]
     public string Description { get; set; }
 
     public int CompareTo( object? obj )
@@ -19,3 +29,7 @@ public class Region : IComparable
     }
 }
 
+public partial class Region
+{
+    public static Collection<Region>? FromJson( string json ) => JsonSerializer.Deserialize<Collection<Region>>( json );
+}

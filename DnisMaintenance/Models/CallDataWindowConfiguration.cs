@@ -6,10 +6,10 @@
 //
 //    var callDataWindowConfiguration = CallDataWindowConfiguration.FromJson(jsonString);
 
-using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
 
 namespace DnisMaintenance.Models;
 
@@ -59,7 +59,7 @@ public partial class DnisList
     public List<KvpList> KvpList { get; set; }
 }
 
-public partial class KvpList
+public partial class KvpList : IComparable
 {
     [JsonPropertyName( "viewOrder" )]
     public string ViewOrder { get; set; }
@@ -72,16 +72,26 @@ public partial class KvpList
 
     [JsonPropertyName( "useAttribute" )]
     public bool UseAttribute { get; set; } = false;
+
+    public int CompareTo( object obj )
+    {
+        return obj is not KvpList other
+            ? 1
+            : string.IsNullOrEmpty( this.ViewOrder ) && string.IsNullOrEmpty( other.ViewOrder )
+               ? 0
+               : string.IsNullOrEmpty( this.ViewOrder )
+                 ? -1
+                 : string.IsNullOrEmpty( other.ViewOrder )
+                   ? 1
+                   : string.Compare( this.ViewOrder, other.ViewOrder, StringComparison.OrdinalIgnoreCase );
+    }
 }
 
 public partial class CallDataWindowConfiguration
 {
     public static CallDataWindowConfiguration FromJson( string json ) => JsonSerializer.Deserialize<CallDataWindowConfiguration>( json );
-}
 
-public static class Serialize
-{
-    public static string ToJson( this CallDataWindowConfiguration self ) => JsonSerializer.Serialize( self, new JsonSerializerOptions()
+    public static string ToJson( CallDataWindowConfiguration self ) => JsonSerializer.Serialize( self, new JsonSerializerOptions()
     {
         WriteIndented= true
     } );

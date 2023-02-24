@@ -9,7 +9,7 @@
     }
 
     .top-row ::deep a, .top-row ::deep .btn-link {
-        margin-left: 0;
+        margin-left: 10px;
     }
 
     @media (min-width: 641px) {

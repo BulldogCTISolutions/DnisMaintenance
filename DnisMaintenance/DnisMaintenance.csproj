@@ -1,23 +1,40 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-	        <RunAOTCompilation>true</RunAOTCompilation>
-	        <BlazorEnableCompression>false</BlazorEnableCompression>
-	        <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-	        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+        <RunAOTCompilation>true</RunAOTCompilation>
+        <BlazorEnableCompression>false</BlazorEnableCompression>
+        <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<AnalysisMode>All</AnalysisMode>
+        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+        <AnalysisLevel>latest</AnalysisLevel>
+	    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+        <NoWarn>1036,1701;1702;9057;</NoWarn>
+        <TypeScriptTarget>ES2021</TypeScriptTarget>
+        <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
+        <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
 	</PropertyGroup>
 
-	<ItemGroup Condition="$(TargetFramework)=='net7.0' ">
+    <ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+		<PackageReference Include="BlazorApplicationInsights" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.*" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Fast.Components.FluentUI" Version="2.0.5" />
-	        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-	        <PackageReference Include="System.Text.Json" Version="7.0.1" />
-	</ItemGroup>
+        <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="7.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+        <PackageReference Include="System.Text.Json" Version="7.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\.editorConfig" Link=".editorConfig" />
+    </ItemGroup>
 
 </Project>

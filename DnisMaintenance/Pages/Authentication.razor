@@ -1,0 +1,59 @@
+﻿@page "/authentication/{action}"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded" OnLogOutSucceeded="OnLogOutSucceeded"  />
+
+@code
+{
+    [Parameter] public string? Action { get; set; }
+
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    [Inject] private IApplicationInsights applicationInsights { get; set; }
+
+
+    private string _userId = string.Empty;
+    private string _sessionId = string.Empty;
+
+
+    public async Task OnLogInSucceeded()
+    {
+        var user = ( await AuthenticationState ).User;
+        if( user is null )
+        {
+            return;
+        }
+        await applicationInsights.SetAuthenticatedUserContext( user.FindFirst( "preferred_username" )?.Value );
+    }
+
+    public async Task OnLogOutSucceeded()
+    {
+        await applicationInsights.ClearAuthenticatedUserContext();
+    }
+
+    private async Task SetAuthenticatedUserContext()
+    {
+        await this.applicationInsights.SetAuthenticatedUserContext( "myUserId", "myUserName", true ).ConfigureAwait( false );
+        await this.applicationInsights.TrackEvent( "Auth Event" ).ConfigureAwait( false );
+        await this.applicationInsights.Flush().ConfigureAwait( false );
+    }
+
+    private async Task ClearAuthenticatedUserContext()
+    {
+        await this.applicationInsights.SetAuthenticatedUserContext( "myUserId", "myUserName", true ).ConfigureAwait( false );
+        await this.applicationInsights.TrackEvent( "Auth Event" ).ConfigureAwait( false );
+        await this.applicationInsights.ClearAuthenticatedUserContext().ConfigureAwait( false );
+        await this.applicationInsights.TrackEvent( "Auth Event2" ).ConfigureAwait( false );
+        await this.applicationInsights.Flush().ConfigureAwait( false );
+    }
+
+    private async Task GetUserId()
+    {
+        this._userId = await this.applicationInsights.GetUserId().ConfigureAwait( false );
+    }
+
+    private async Task GetSessionId()
+    {
+        this._sessionId = await this.applicationInsights.GetSessionId().ConfigureAwait( false );
+    }
+}

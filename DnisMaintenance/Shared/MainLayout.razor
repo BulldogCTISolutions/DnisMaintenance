@@ -1,23 +1,29 @@
 ﻿@inherits LayoutComponentBase
 
+<Toast />
+
 <div class="container">
     <div class="siteheader">
+        <img style="height: 70%" src="icon-192.png" />
         <div style="margin-left: 20px; margin-top: 15px">
             <h4>WDE CallDataWindow Maintenance Tool</h4>
         </div>
         <div style="margin-left: 50px; margin-top: 3px">
-        <LoginDisplay />
+            <LoginDisplay />
         </div>
     </div>
 
     <div>
-        <ErrorBoundary>
+        <CustomErrorBoundary>
             <ChildContent>
                 @Body
             </ChildContent>
             <ErrorContent Context="ex">
-                <p class="error">@ex.Message</p>
+                <div id="blazor-error-ui" class="blazor-error-ui">
+                    Boom!
+                </div>
+                <h1 style="color: red;">Oops... error occured: @ex.Message </h1>
             </ErrorContent>
-        </ErrorBoundary>
+        </CustomErrorBoundary>
     </div>
 </div>
